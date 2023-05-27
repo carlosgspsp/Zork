@@ -1,5 +1,8 @@
 
-/[Bb]uild/
+/[Dd]ebug/
+
+.vs/
+
 
 # Prerequisites
 *.d
