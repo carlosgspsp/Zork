@@ -1,5 +1,4 @@
 #pragma once
-#include "entity.h"
 #include "room.h"
 
 
@@ -10,6 +9,7 @@ private:
 	bool takeable;
 	bool container;
 
-
+public:
+	void Update()override;
 };
 

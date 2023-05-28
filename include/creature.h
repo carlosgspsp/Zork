@@ -10,5 +10,6 @@ private:
 
 public:
 	Creature(string name, string description, Room* location);
+	void Update()override;
 };
 

@@ -2,6 +2,8 @@
 #include "entity.h"
 #include "room.h"
 
+using namespace std;
+
 enum ExitDirection
 {
 	NORTH,
@@ -9,7 +11,7 @@ enum ExitDirection
 	EAST,
 	WEST,
 	UP,
-	DOWN,
+	DOWN
 };
 
 class Exit : public Entity
@@ -20,5 +22,6 @@ private:
 	Room* destination;
 public:
 	Exit(string name, string description, ExitDirection direction, Room* source, Room* destination); //Exit constructor
+	void Update()override;
 };
 

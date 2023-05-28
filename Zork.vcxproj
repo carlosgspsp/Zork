@@ -19,7 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\item.cpp" />
+    <ClCompile Include="src\room.cpp" />
+    <ClCompile Include="src\exit.cpp" />
+    <ClCompile Include="src\creature.cpp" />
+    <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\world.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\exit.h" />
+    <ClInclude Include="include\creature.h" />
+    <ClInclude Include="include\entity.h" />
+    <ClInclude Include="include\world.h" />
+    <ClInclude Include="include\room.h" />
+    <ClInclude Include="include\item.h" />
+    <ClInclude Include="include\player.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -15,6 +15,6 @@ class Player : public Creature
 {
 public:
 	Player(string name, string description, Room* location);
-	void Update();
+	void Update()override; 
 };
 

@@ -5,3 +5,7 @@ Creature::Creature(string name, string description, Room* location) : Entity(nam
 	this->location = location;
 
 }
+
+void Creature::Update() {
+
+}

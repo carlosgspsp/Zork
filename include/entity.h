@@ -23,9 +23,9 @@ private:
 	list<Entity*> contains;
 
 public:
-	Entity(string name, string description, EntityType type;);
+	Entity(string name, string description, EntityType type);
 
-	virtual void Update();
+	virtual void Update() = 0;
 
 	EntityType GetType();
 	string GetName();

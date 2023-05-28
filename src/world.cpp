@@ -1,6 +1,7 @@
 #include "../include/world.h"
 #include "../include/room.h"
 #include "../include/player.h"
+#include "../include/exit.h"
 
 
 World::World() { //World constructor
