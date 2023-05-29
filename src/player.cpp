@@ -117,3 +117,30 @@ void Player::Take(vector<string> args) {
 	}
 
 }
+
+void Player::Drop(vector<string> args) {
+
+	Room* location = GetLocation();
+	Entity* entity = nullptr;
+	bool drop = false;
+	for (auto player_entity : GetContains()) {
+		for (int i = 1; i < args.size(); i++) {
+			if (args[i].compare(player_entity->GetName()) == 0) {
+						drop = true;
+						entity = player_entity;
+			}
+		}
+	}
+
+
+	if (drop && entity != nullptr) {
+		location->AddEntity(entity);
+		RemoveEntity(entity);
+
+		cout << entity->GetName() << " dropped." << endl;
+	}
+	else {
+		cout << "The item could not be dropped" << endl;
+	}
+
+}

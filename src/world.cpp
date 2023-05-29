@@ -31,6 +31,7 @@ World::World() { //World constructor
 	actions_map.insert({ "quit", Actions::QUIT });
 	actions_map.insert({ "q", Actions::QUIT });
 	actions_map.insert({ "take", Actions::TAKE });
+	actions_map.insert({ "drop", Actions::DROP });
 
 	directions_map.insert({ "north", ExitDirections::NORTH });
 	directions_map.insert({ "n", ExitDirections::NORTH });
@@ -88,7 +89,7 @@ World::World() { //World constructor
 	Item* mailbox = new Item("mailbox", "small mailbox", false, true, false);
 	west_house->AddEntity(mailbox);
 
-	Item* stone = new Item("stone", "small stone", false, false, false);
+	Item* stone = new Item("stone", "small stone", true, false, false);
 	player->AddEntity(stone);
 
 
@@ -180,6 +181,10 @@ void World::ParseCommand(string command) {
 		case Actions::TAKE:
 			cout << endl << "TAKE COMMAND" << endl;
 			((Player*)player)->Take(command_words);
+			break;
+		case Actions::DROP:
+			cout << endl << "DROP COMMAND" << endl;
+			((Player*)player)->Drop(command_words);
 			break;
 		case Actions::QUIT:
 			finish_game = true;

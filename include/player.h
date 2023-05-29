@@ -14,5 +14,6 @@ public:
 	void Look();
 	void Inventory();
 	void Take(vector<string> args);
+	void Drop(vector<string> args);
 };
 
