@@ -15,5 +15,6 @@ public:
 	void Inventory();
 	void Take(vector<string> args);
 	void Drop(vector<string> args);
+	void Put(vector<string> args);
 };
 

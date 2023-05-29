@@ -23,13 +23,14 @@ void Player::Go(vector<string> args, const vector<Entity*>& entities, map<string
 	bool moved = false;
 	if (it != directions_map.end()) {
 		direction = it->second;
-
+		Room* destination;
 		for (auto entity : entities) {
 			if (entity->GetType() == EntityType::EXIT) {
 				if (((Exit*)entity)->GetSource() == GetLocation()) {
 					if (((Exit*)entity)->GetDirection() == direction) {
 						if (!moved) {
-							SetLocation(((Exit*)entity)->GetDestination());
+							destination = ((Exit*)entity)->GetDestination();
+							SetLocation(destination);
 							moved = true;
 						}
 
@@ -40,6 +41,9 @@ void Player::Go(vector<string> args, const vector<Entity*>& entities, map<string
 
 		if (!moved) {
 			cout << endl << "You can not go to that direction from here." << endl;
+		}
+		else {
+			Look();
 		}
 
 	}
@@ -59,8 +63,8 @@ void Player::Look() {
 
 	for (auto entity : location->GetContains()) {
 		cout << endl << "There is a " << entity->GetDescription() << " here.";
-		
-			
+
+
 		if (!entity->GetContains().empty()) {
 			cout << endl << "The " << entity->GetDescription() << " contains:";
 			for (auto inside_entity : entity->GetContains()) {
@@ -70,7 +74,7 @@ void Player::Look() {
 	}
 
 	cout << endl;
-	
+
 }
 
 void Player::Inventory() {
@@ -82,7 +86,7 @@ void Player::Inventory() {
 }
 
 void Player::Take(vector<string> args) {
-	
+
 	Room* location = GetLocation();
 	Entity* entity = nullptr;
 	bool take = false;
@@ -97,8 +101,8 @@ void Player::Take(vector<string> args) {
 						entity = room_entity;
 					}
 				}
-				
-				
+
+
 			}
 		}
 	}
@@ -109,7 +113,7 @@ void Player::Take(vector<string> args) {
 
 		cout << entity->GetName() << " taken." << endl;
 	}
-	else if (found){
+	else if (found) {
 		cout << "The item could not be taken" << endl;
 	}
 	else {
@@ -126,8 +130,8 @@ void Player::Drop(vector<string> args) {
 	for (auto player_entity : GetContains()) {
 		for (int i = 1; i < args.size(); i++) {
 			if (args[i].compare(player_entity->GetName()) == 0) {
-						drop = true;
-						entity = player_entity;
+				drop = true;
+				entity = player_entity;
 			}
 		}
 	}
@@ -143,4 +147,59 @@ void Player::Drop(vector<string> args) {
 		cout << "The item could not be dropped" << endl;
 	}
 
+}
+
+void Player::Put(vector<string> args) {
+	if (args.size() == 4 && args[2].compare("in") == 0) {
+		Room* location = GetLocation();
+		Entity* entity = nullptr;
+		Entity* new_container = nullptr;
+		Entity* old_container = nullptr;
+
+		bool entity_found = false;
+		bool container_found = false;
+
+		for (auto player_entity : GetContains()) {
+			if (player_entity->GetType() == EntityType::ITEM) {
+				if (args[1].compare(player_entity->GetName()) == 0) {
+					entity = player_entity;
+					old_container = this;
+					entity_found = true;
+				}
+				if (args[3].compare(player_entity->GetName()) == 0 && ((Item*)player_entity)->isContainer()) {
+					new_container = player_entity;
+					container_found = true;
+					
+				}
+			}
+
+		}
+		
+		for (auto room_entity : location->GetContains()) {
+			if (room_entity->GetType() == EntityType::ITEM) {
+				if (args[1].compare(room_entity->GetName()) == 0) {
+					entity = room_entity;
+					old_container = location;
+					entity_found = true;
+				}
+				if (args[3].compare(room_entity->GetName()) == 0 && ((Item*)room_entity)->isContainer()) {
+					new_container = room_entity;
+					container_found = true;
+
+				}
+			}
+
+		}
+		
+
+		if (entity_found && container_found) {
+			new_container->AddEntity(entity);
+			old_container->RemoveEntity(entity);
+
+			cout << endl << "The item: " <<entity->GetName()<<" has been moved to " << new_container->GetName();
+		} else{
+			cout << endl << "The item could not be moved";
+		}
+
+	}
 }

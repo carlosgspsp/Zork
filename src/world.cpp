@@ -32,6 +32,7 @@ World::World() { //World constructor
 	actions_map.insert({ "q", Actions::QUIT });
 	actions_map.insert({ "take", Actions::TAKE });
 	actions_map.insert({ "drop", Actions::DROP });
+	actions_map.insert({ "put", Actions::PUT });
 
 	directions_map.insert({ "north", ExitDirections::NORTH });
 	directions_map.insert({ "n", ExitDirections::NORTH });
@@ -154,10 +155,10 @@ void World::ParseCommand(string command) {
 
 	vector<string> command_words;
 	command_words = Tokenize(command);
-	cout << endl << "tokenized words" << endl;
+	/*cout << endl << "tokenized words" << endl;
 	for (int i = 0; i < command_words.size(); i++) {
 		cout << endl << ':' << command_words[i] << ':' << endl;
-	}
+	}*/
 	map<string, Actions>::iterator it = actions_map.find(command_words[0]);
 
 	if (it != actions_map.end()) {
@@ -166,9 +167,7 @@ void World::ParseCommand(string command) {
 		{
 		case Actions::GO:
 			cout << endl << "GO COMMAND" << endl;
-			cout << "Old player location;: " << ((Player*)player)->GetLocation()->GetName() << endl;
 			((Player*)player)->Go(command_words, entities, directions_map);
-			cout << "New player location;: " << ((Player*)player)->GetLocation()->GetName() << endl;
 			break;
 		case Actions::LOOK:
 			cout << endl << "LOOK COMMAND" << endl;
@@ -185,6 +184,10 @@ void World::ParseCommand(string command) {
 		case Actions::DROP:
 			cout << endl << "DROP COMMAND" << endl;
 			((Player*)player)->Drop(command_words);
+			break;
+		case Actions::PUT:
+			cout << endl << "PUT COMMAND" << endl;
+			((Player*)player)->Put(command_words);
 			break;
 		case Actions::QUIT:
 			finish_game = true;

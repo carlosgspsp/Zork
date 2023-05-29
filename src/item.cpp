@@ -14,6 +14,10 @@ void Item::AddEntity(Entity* entity) {
 bool Item::isTakeble() {
 	return takeable;
 }
+
+bool Item::isContainer() {
+	return container;
+}
 void Item::Update() {
 
 }
