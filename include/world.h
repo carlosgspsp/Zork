@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include "entity.h"
+#include "../include/exit.h"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ enum Actions
 	OPEN,
 	CLOSE,
 	TURN_ON,
+	QUIT,
 };
 
 class World
@@ -27,6 +29,7 @@ private:
 	vector<Entity*> entities;
 	bool finish_game;
 	map<string, Actions> actions_map;
+	map<string, ExitDirections> directions_map;
 	Entity* player;
 public:
 	World();

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Exit::Exit(string name,string description,ExitDirection direction, Room* source, Room* destination): Entity(name, description, EntityType::EXIT) { //Exit constructor
+Exit::Exit(string name,string description,ExitDirections direction, Room* source, Room* destination): Entity(name, description, EntityType::EXIT) { //Exit constructor
 
 	this->direction = direction;
 	this->source = source;
@@ -11,4 +11,16 @@ Exit::Exit(string name,string description,ExitDirection direction, Room* source,
 
 void Exit::Update() {
 
+}
+
+Room* Exit::GetSource() {
+	return source;
+}
+
+Room* Exit::GetDestination() {
+	return destination;
+}
+
+ExitDirections Exit::GetDirection() {
+	return direction;
 }

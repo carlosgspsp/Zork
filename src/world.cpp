@@ -1,7 +1,7 @@
 #include "../include/world.h"
 #include "../include/room.h"
 #include "../include/player.h"
-#include "../include/exit.h"
+
 
 
 
@@ -9,7 +9,7 @@ World::World() { //World constructor
 
 	finish_game = false;
 
-	//filling map with posible string keys
+	//filling maps with posible string keys
 	actions_map.insert({ "l", Actions::LOOK });
 	actions_map.insert({ "look", Actions::LOOK });
 	actions_map.insert({ "go", Actions::GO });
@@ -27,6 +27,23 @@ World::World() { //World constructor
 	actions_map.insert({ "d", Actions::GO });
 	actions_map.insert({ "inventory", Actions::INVENTORY });
 	actions_map.insert({ "i", Actions::INVENTORY });
+	actions_map.insert({ "quit", Actions::QUIT });
+	actions_map.insert({ "q", Actions::QUIT });
+
+	directions_map.insert({ "north", ExitDirections::NORTH });
+	directions_map.insert({ "n", ExitDirections::NORTH });
+	directions_map.insert({ "south", ExitDirections::SOUTH });
+	directions_map.insert({ "s", ExitDirections::SOUTH });
+	directions_map.insert({ "west", ExitDirections::WEST });
+	directions_map.insert({ "w", ExitDirections::WEST });
+	directions_map.insert({ "east", ExitDirections::EAST });
+	directions_map.insert({ "e", ExitDirections::EAST });
+	directions_map.insert({ "up", ExitDirections::UP });
+	directions_map.insert({ "u", ExitDirections::UP });
+	directions_map.insert({ "down", ExitDirections::DOWN });
+	directions_map.insert({ "d", ExitDirections::DOWN });
+
+
 
 
 
@@ -37,22 +54,31 @@ World::World() { //World constructor
 	Room* south_house = new Room("South of house", "You are facing the south side of a white house.");
 
 	Room* kitchen = new Room("Kitchen", "You are in the kitchen of the white house");
-	Room* attic = new Room("Kitchen", "You are kitchen of the white house");
-	Room* living_room = new Room("Kitchen", "You are kitchen of the white house");
+	Room* attic = new Room("Attic", "This is the attic.");
+	Room* living_room = new Room("Living Room", "You are in the living room.");
 
 
-	Exit* west_house_to_north_house = new Exit("", "", ExitDirection::NORTH, west_house, north_house);
-	Exit* west_house_to_south_house = new Exit("", "", ExitDirection::SOUTH, west_house, south_house);
+	Exit* west_house_to_north_house = new Exit("", "", ExitDirections::NORTH, west_house, north_house);
+	Exit* west_house_to_south_house = new Exit("", "", ExitDirections::SOUTH, west_house, south_house);
 
-	Exit* north_house_to_west_house = new Exit("", "", ExitDirection::WEST, north_house, west_house);
-	Exit* north_house_to_behind_house = new Exit("", "", ExitDirection::EAST, north_house, behind_house);
+	Exit* north_house_to_west_house = new Exit("", "", ExitDirections::WEST, north_house, west_house);
+	Exit* north_house_to_behind_house = new Exit("", "", ExitDirections::EAST, north_house, behind_house);
 
-	Exit* behind_house_to_north_house = new Exit("", "", ExitDirection::NORTH, behind_house, north_house);
-	Exit* behind_house_to_kitchen = new Exit("", "In one corner of the house there is a small window which is open.", ExitDirection::EAST, behind_house, kitchen);
-	Exit* behind_house_to_south_house = new Exit("", "", ExitDirection::SOUTH, behind_house, south_house);
+	Exit* behind_house_to_north_house = new Exit("", "", ExitDirections::NORTH, behind_house, north_house);
+	Exit* behind_house_to_kitchen = new Exit("", "In one corner of the house there is a small window which is open.", ExitDirections::WEST, behind_house, kitchen);
+	Exit* behind_house_to_south_house = new Exit("", "", ExitDirections::SOUTH, behind_house, south_house);
 
-	Exit* south_house_to_west_house = new Exit("", "", ExitDirection::WEST, south_house, west_house);
-	Exit* south_house_to_behind_house = new Exit("", "", ExitDirection::EAST, south_house, behind_house);
+	Exit* south_house_to_west_house = new Exit("", "", ExitDirections::WEST, south_house, west_house);
+	Exit* south_house_to_behind_house = new Exit("", "", ExitDirections::EAST, south_house, behind_house);
+
+	Exit* kitchen_to_behind_house = new Exit("", "", ExitDirections::EAST, kitchen, behind_house);
+	Exit* kitchen_to_living_room = new Exit("", "", ExitDirections::WEST, kitchen, living_room);
+	Exit* kitchen_to_attic = new Exit("", "", ExitDirections::UP, kitchen, attic);
+
+	Exit* living_room_to_kitchen = new Exit("", "", ExitDirections::EAST, living_room, kitchen);
+
+	Exit* attic_to_kitchen = new Exit("", "", ExitDirections::DOWN, attic, kitchen);
+
 
 	player = new Player("Player", "The Hero of the Dungeon", west_house);
 
@@ -62,8 +88,8 @@ World::World() { //World constructor
 	entities.push_back(south_house);
 
 	entities.push_back(kitchen);
-	//entities.push_back(attic);
-	//entities.push_back(living_room);
+	entities.push_back(attic);
+	entities.push_back(living_room);
 
 
 	entities.push_back(west_house_to_north_house);
@@ -78,6 +104,15 @@ World::World() { //World constructor
 
 	entities.push_back(south_house_to_west_house);
 	entities.push_back(south_house_to_behind_house);
+
+	entities.push_back(kitchen_to_behind_house);
+	entities.push_back(kitchen_to_living_room);
+	entities.push_back(kitchen_to_attic);
+
+	entities.push_back(living_room_to_kitchen);
+
+	entities.push_back(attic_to_kitchen);
+	
 
 	entities.push_back(player);
 
@@ -114,9 +149,15 @@ void World::ParseCommand(string command) {
 		{
 		case Actions::GO:
 			cout << endl << "GO COMMAND" << endl;
+			cout << "Old player location;: " << ((Player*)player)->GetLocation()->GetName() << endl;
+			((Player*)player)->Go(command_words, entities, directions_map);
+			cout << "New player location;: " << ((Player*)player)->GetLocation()->GetName() << endl;
 			break;
 		case Actions::LOOK:
 			cout << endl << "LOOK COMMAND" << endl;
+			break;
+		case Actions::QUIT:
+			finish_game = true;
 			break;
 		default:
 			break;

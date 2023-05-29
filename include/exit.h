@@ -4,7 +4,7 @@
 
 using namespace std;
 
-enum ExitDirection
+enum ExitDirections
 {
 	NORTH,
 	SOUTH,
@@ -17,11 +17,15 @@ enum ExitDirection
 class Exit : public Entity
 {
 private:
-	ExitDirection direction;
+	ExitDirections direction;
 	Room* source;
 	Room* destination;
 public:
-	Exit(string name, string description, ExitDirection direction, Room* source, Room* destination); //Exit constructor
+	Exit(string name, string description, ExitDirections direction, Room* source, Room* destination); //Exit constructor
 	void Update()override;
+	Room* GetSource();
+	Room* GetDestination();
+	ExitDirections GetDirection();
+
 };
 

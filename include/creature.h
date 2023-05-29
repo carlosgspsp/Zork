@@ -11,5 +11,7 @@ private:
 public:
 	Creature(string name, string description, Room* location);
 	void Update()override;
+	Room* GetLocation();
+	void SetLocation(Room* new_location);
 };
 
