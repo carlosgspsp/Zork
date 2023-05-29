@@ -1,6 +1,7 @@
 #include "../include/world.h"
 #include "../include/room.h"
 #include "../include/player.h"
+#include "../include/item.h"
 
 
 
@@ -80,6 +81,12 @@ World::World() { //World constructor
 	Exit* attic_to_kitchen = new Exit("", "", ExitDirections::DOWN, attic, kitchen);
 
 
+	Item* mailbox = new Item("mailbox", "small mailbox", false, true, false);
+	west_house->AddEntity(mailbox);
+
+	Item* stone = new Item("stone", "small stone", false, false, false);
+	mailbox->AddEntity(stone);
+			
 	player = new Player("Player", "The Hero of the Dungeon", west_house);
 
 	entities.push_back(west_house);
@@ -113,6 +120,8 @@ World::World() { //World constructor
 
 	entities.push_back(attic_to_kitchen);
 	
+
+	entities.push_back(mailbox);
 
 	entities.push_back(player);
 
@@ -155,6 +164,7 @@ void World::ParseCommand(string command) {
 			break;
 		case Actions::LOOK:
 			cout << endl << "LOOK COMMAND" << endl;
+			((Player*)player)->Look();
 			break;
 		case Actions::QUIT:
 			finish_game = true;

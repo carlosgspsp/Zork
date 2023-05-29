@@ -5,11 +5,13 @@
 class Item : public Entity
 {
 private:
-	Room* location;
 	bool takeable;
 	bool container;
+	bool open;
 
 public:
+	Item(string name, string description, bool takeable, bool container, bool open);
+	void AddEntity(Entity* entity);
 	void Update()override;
 };
 

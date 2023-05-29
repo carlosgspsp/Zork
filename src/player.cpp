@@ -11,7 +11,7 @@ void Player::Update() {
 
 }
 
-void Player::Go(vector<string> args, const vector<Entity*>& entities, map<string, ExitDirections> directions_map){
+void Player::Go(vector<string> args, const vector<Entity*>& entities, map<string, ExitDirections>& directions_map) {
 
 	int direction_pos = (args.size() > 2) ? 1 : args.size() - 1;
 	ExitDirections direction;
@@ -31,7 +31,7 @@ void Player::Go(vector<string> args, const vector<Entity*>& entities, map<string
 							SetLocation(((Exit*)entity)->GetDestination());
 							moved = true;
 						}
-						
+
 					}
 				}
 			}
@@ -47,5 +47,29 @@ void Player::Go(vector<string> args, const vector<Entity*>& entities, map<string
 	}
 
 
+
+}
+
+void Player::Look() {
+	Room* location = GetLocation();
+
+	cout << endl << location->GetName();
+	cout << endl << location->GetDescription();
+
+	for (auto entity : location->GetContains()) {
+		cout << endl << "There is a " << entity->GetDescription() << " here.";
+		
+			
+		if (!entity->GetContains().empty()) {
+			cout << endl << "The " << entity->GetDescription() << " contains:";
+			for (auto inside_entity : entity->GetContains()) {
+				cout << endl << "A " << inside_entity->GetDescription();
+			}
+		}
+	}
 	
+}
+
+void Player::Take(vector<string> args, const vector<Entity*>& entities) {
+
 }

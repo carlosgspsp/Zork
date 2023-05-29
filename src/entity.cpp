@@ -19,8 +19,16 @@ string Entity::GetDescription() {
 	return description;
 }
 
-list<Entity*>& Entity::GetContains() {
+const list<Entity*>& Entity::GetContains() {
 	return this->contains;
+}
+
+void Entity::AddEntity(Entity* entity) {
+	contains.push_back(entity);
+}
+
+void Entity::RemoveEntity(Entity* entity) {
+	contains.remove(entity);
 }
 
 void Entity::SetType(EntityType type) {

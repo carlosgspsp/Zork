@@ -30,7 +30,13 @@ public:
 	EntityType GetType();
 	string GetName();
 	string GetDescription();
-	list<Entity*>& GetContains();
+	const list<Entity*>& GetContains();
+	void AddEntity(Entity* entity);
+	void RemoveEntity(Entity* entity);
+
+	//Set contains
+	//Add contains
+	//Remove contains
 
 
 	void SetType(EntityType type);
