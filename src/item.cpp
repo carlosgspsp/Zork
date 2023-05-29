@@ -10,6 +10,10 @@ void Item::AddEntity(Entity* entity) {
 		Entity::AddEntity(entity);
 	}
 }
+
+bool Item::isTakeble() {
+	return takeable;
+}
 void Item::Update() {
 
 }

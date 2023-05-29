@@ -30,6 +30,7 @@ World::World() { //World constructor
 	actions_map.insert({ "i", Actions::INVENTORY });
 	actions_map.insert({ "quit", Actions::QUIT });
 	actions_map.insert({ "q", Actions::QUIT });
+	actions_map.insert({ "take", Actions::TAKE });
 
 	directions_map.insert({ "north", ExitDirections::NORTH });
 	directions_map.insert({ "n", ExitDirections::NORTH });
@@ -89,8 +90,8 @@ World::World() { //World constructor
 
 	Item* stone = new Item("stone", "small stone", false, false, false);
 	player->AddEntity(stone);
-			
-	
+
+
 
 	entities.push_back(west_house);
 	entities.push_back(north_house);
@@ -122,7 +123,7 @@ World::World() { //World constructor
 	entities.push_back(living_room_to_kitchen);
 
 	entities.push_back(attic_to_kitchen);
-	
+
 
 	entities.push_back(mailbox);
 
@@ -133,13 +134,15 @@ World::World() { //World constructor
 
 void World::Play() {
 	string command;
-
+	cout << "Wecome to Zork" << endl;
+	cout << endl;
+	((Player*)player)->Look();
+	cout << endl;
 	while (!finish_game) {
-		//string.getline(command,100, '\n');
-		cout << endl;
 		getline(std::cin, command, '\n');
-		//cout << endl << command;
-		ParseCommand(command);
+		if (command != "") {
+			ParseCommand(command);
+		}
 	}
 }
 
@@ -173,6 +176,10 @@ void World::ParseCommand(string command) {
 		case Actions::INVENTORY:
 			cout << endl << "INVENTORY COMMAND" << endl;
 			((Player*)player)->Inventory();
+			break;
+		case Actions::TAKE:
+			cout << endl << "TAKE COMMAND" << endl;
+			((Player*)player)->Take(command_words);
 			break;
 		case Actions::QUIT:
 			finish_game = true;

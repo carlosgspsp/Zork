@@ -7,14 +7,9 @@
 using namespace std;
 int main()
 {
-    
     World* world = new World();
-
     string command;
-    cout << "Wecome to Zork" << endl;
-
     world->Play();
-    
 }
 
 // Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar

@@ -1,4 +1,5 @@
 #include "../include/player.h"
+#include "../include/item.h"
 
 using namespace std;
 
@@ -67,6 +68,8 @@ void Player::Look() {
 			}
 		}
 	}
+
+	cout << endl;
 	
 }
 
@@ -75,8 +78,42 @@ void Player::Inventory() {
 	for (auto entity : this->GetContains()) {
 		cout << endl << "A " << entity->GetDescription();
 	}
+	cout << endl;
 }
 
-void Player::Take(vector<string> args, const vector<Entity*>& entities) {
+void Player::Take(vector<string> args) {
+	
+	Room* location = GetLocation();
+	Entity* entity = nullptr;
+	bool take = false;
+	bool found = false;
+	for (auto room_entity : location->GetContains()) {
+		for (int i = 1; i < args.size(); i++) {
+			if (args[i].compare(room_entity->GetName()) == 0) {
+				found = true;
+				if (room_entity->GetType() == EntityType::ITEM) {
+					if (((Item*)room_entity)->isTakeble()) {
+						take = true;
+						entity = room_entity;
+					}
+				}
+				
+				
+			}
+		}
+	}
+
+	if (take && entity != nullptr) {
+		AddEntity(entity);
+		location->RemoveEntity(entity);
+
+		cout << entity->GetName() << " taken." << endl;
+	}
+	else if (found){
+		cout << "The item could not be taken" << endl;
+	}
+	else {
+		cout << "The item was not found" << endl;
+	}
 
 }
