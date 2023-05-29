@@ -4,15 +4,39 @@
 #include "../include/exit.h"
 
 
+
 World::World() { //World constructor
-	
-	//Recreating the initial zone of Zork
+
+	finish_game = false;
+
+	//filling map with posible string keys
+	actions_map.insert({ "l", Actions::LOOK });
+	actions_map.insert({ "look", Actions::LOOK });
+	actions_map.insert({ "go", Actions::GO });
+	actions_map.insert({ "east", Actions::GO });
+	actions_map.insert({ "e", Actions::GO });
+	actions_map.insert({ "west", Actions::GO });
+	actions_map.insert({ "w", Actions::GO });
+	actions_map.insert({ "north", Actions::GO });
+	actions_map.insert({ "n", Actions::GO });
+	actions_map.insert({ "south", Actions::GO });
+	actions_map.insert({ "s", Actions::GO });
+	actions_map.insert({ "up", Actions::GO });
+	actions_map.insert({ "u", Actions::GO });
+	actions_map.insert({ "down", Actions::GO });
+	actions_map.insert({ "d", Actions::GO });
+	actions_map.insert({ "inventory", Actions::INVENTORY });
+	actions_map.insert({ "i", Actions::INVENTORY });
+
+
+
+	//Recreating the initial zone of Zork with Rooms, Exits and the player
 	Room* west_house = new Room("West of House", "This is an open field west of a white house.");
 	Room* north_house = new Room("North of House", "You are facing the north side of a white house.  There is no door here, and all the windows are barred.");
 	Room* behind_house = new Room("Behind House", "You are behind the white house.");
 	Room* south_house = new Room("South of house", "You are facing the south side of a white house.");
 
-	Room* kitchen =  new Room("Kitchen", "You are in the kitchen of the white house");
+	Room* kitchen = new Room("Kitchen", "You are in the kitchen of the white house");
 	Room* attic = new Room("Kitchen", "You are kitchen of the white house");
 	Room* living_room = new Room("Kitchen", "You are kitchen of the white house");
 
@@ -30,7 +54,7 @@ World::World() { //World constructor
 	Exit* south_house_to_west_house = new Exit("", "", ExitDirection::WEST, south_house, west_house);
 	Exit* south_house_to_behind_house = new Exit("", "", ExitDirection::EAST, south_house, behind_house);
 
-	Player* player = new Player("Player","The Hero of the Dungeon", west_house);
+	player = new Player("Player", "The Hero of the Dungeon", west_house);
 
 	entities.push_back(west_house);
 	entities.push_back(north_house);
@@ -58,4 +82,89 @@ World::World() { //World constructor
 	entities.push_back(player);
 
 
+}
+
+void World::Play() {
+	string command;
+
+	while (!finish_game) {
+		//string.getline(command,100, '\n');
+		getline(std::cin, command, '\n');
+		//cout << endl << command;
+		ParseCommand(command);
+	}
+}
+
+bool World::GameFinished() {
+	return finish_game;
+}
+void World::ParseCommand(string command) {
+
+	vector<string> command_words;
+	command_words = Tokenize(command);
+	cout << endl << "tokenized words" << endl;
+	for (int i = 0; i < command_words.size(); i++) {
+		cout << endl << ':' << command_words[i] << ':' << endl;
+	}
+	map<string, Actions>::iterator it = actions_map.find(command_words[0]);
+
+	if (it != actions_map.end()) {
+		Actions action = actions_map[command_words[0]];
+		switch (action)
+		{
+		case Actions::GO:
+			cout << endl << "GO COMMAND" << endl;
+			break;
+		case Actions::LOOK:
+			cout << endl << "LOOK COMMAND" << endl;
+			break;
+		default:
+			break;
+		}
+	}
+	else {
+		cout << endl << "I do not recognise that command" << endl;
+	}
+
+
+}
+
+
+
+vector<string> World::Tokenize(string command) {
+
+
+
+	for (int i = 0; i < command.length(); i++) { //Transform command to lowercase
+		command[i] = tolower(command[i]);
+	}
+
+	//Remove blank space from command first and last positions
+	while (command[0] == ' ') {
+		command.erase(0, 1);
+	}
+	while (command[command.length() - 1] == ' ') {
+		command.erase(command.length() - 1, 1);
+	}
+
+	//cout << "'" << command << "'";
+	vector<string> result;
+	int pos = 2;
+	while (pos != -1) {
+		pos = command.find(" ");
+		if (pos != -1) {
+			string substr = command.substr(0, pos);
+			if (!substr.empty()) {
+				result.push_back(substr);
+			}
+			command.erase(0, pos + 1);
+		}
+		else {
+
+			result.push_back(command);
+		}
+	}
+
+
+	return result;
 }

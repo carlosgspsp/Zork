@@ -2,10 +2,19 @@
 //
 
 #include <iostream>
+#include "../include/world.h"
 
+using namespace std;
 int main()
 {
-    std::cout << "Hello World!\n";
+    
+    World* world = new World();
+
+    string command;
+    cout << "Wecome to Zork" << endl;
+
+    world->Play();
+    
 }
 
 // Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
