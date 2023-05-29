@@ -70,6 +70,13 @@ void Player::Look() {
 	
 }
 
+void Player::Inventory() {
+	cout << endl << "You are carrying:";
+	for (auto entity : this->GetContains()) {
+		cout << endl << "A " << entity->GetDescription();
+	}
+}
+
 void Player::Take(vector<string> args, const vector<Entity*>& entities) {
 
 }

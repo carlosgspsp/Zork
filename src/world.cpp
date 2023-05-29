@@ -81,13 +81,16 @@ World::World() { //World constructor
 	Exit* attic_to_kitchen = new Exit("", "", ExitDirections::DOWN, attic, kitchen);
 
 
+	player = new Player("Player", "The Hero of the Dungeon", west_house);
+
+
 	Item* mailbox = new Item("mailbox", "small mailbox", false, true, false);
 	west_house->AddEntity(mailbox);
 
 	Item* stone = new Item("stone", "small stone", false, false, false);
-	mailbox->AddEntity(stone);
+	player->AddEntity(stone);
 			
-	player = new Player("Player", "The Hero of the Dungeon", west_house);
+	
 
 	entities.push_back(west_house);
 	entities.push_back(north_house);
@@ -133,6 +136,7 @@ void World::Play() {
 
 	while (!finish_game) {
 		//string.getline(command,100, '\n');
+		cout << endl;
 		getline(std::cin, command, '\n');
 		//cout << endl << command;
 		ParseCommand(command);
@@ -165,6 +169,10 @@ void World::ParseCommand(string command) {
 		case Actions::LOOK:
 			cout << endl << "LOOK COMMAND" << endl;
 			((Player*)player)->Look();
+			break;
+		case Actions::INVENTORY:
+			cout << endl << "INVENTORY COMMAND" << endl;
+			((Player*)player)->Inventory();
 			break;
 		case Actions::QUIT:
 			finish_game = true;
