@@ -33,6 +33,9 @@ public:
 	Room* GetSource();
 	Room* GetDestination();
 	ExitDirections GetDirection();
+	bool isLocked();
+	void setLocked(bool locked);
+	Item* getKey();
 
 };
 

@@ -35,3 +35,15 @@ Room* Exit::GetDestination() {
 ExitDirections Exit::GetDirection() {
 	return direction;
 }
+
+bool Exit::isLocked() {
+	return this->locked;
+}
+
+void Exit::setLocked(bool locked) {
+	this->locked = locked;
+}
+
+Item* Exit::getKey() {
+	return this->key;
+}

@@ -21,31 +21,31 @@ void Player::Go(vector<string> args, const vector<Entity*>& entities, map<string
 
 
 	bool moved = false;
-	/*if (it != directions_map.end()) {
-		direction = it->second;
-		Room* destination;
-		for (auto entity : entities) {
-			if (entity->GetType() == EntityType::EXIT) {
-				if (((Exit*)entity)->GetSource() == GetLocation()) {
-					if (((Exit*)entity)->GetDirection() == direction) {
-						if (!moved) {
-							destination = ((Exit*)entity)->GetDestination();
-							SetLocation(destination);
-							moved = true;
-						}
-
-					}
-				}
-			}
-		}*/
 	if (it != directions_map.end()) {
 		direction = it->second;
 		for (auto room_entity : location->GetContains()) {
 			if (room_entity->GetType() == EntityType::EXIT) {
 				if (((Exit*)room_entity)->GetDirection() == direction) {
-					SetLocation(((Exit*)room_entity)->GetDestination());
-					moved = true;
+					if (((Exit*)room_entity)->isLocked()) {
+						for (auto player_entity : GetContains()) {
+							if (player_entity == ((Exit*)room_entity)->getKey()) {
+								((Exit*)room_entity)->setLocked(false);
+								SetLocation(((Exit*)room_entity)->GetDestination());
+								moved = true;
+								cout << endl << "The exit was unlocked with the item '" << ((Exit*)room_entity)->getKey()->GetName() << "'"<< endl;
+							}
+						}
+						if (!moved) {
+							cout << endl << "A key its necessary to unlock this exit";
+						}
+					}
+					else {
+							SetLocation(((Exit*)room_entity)->GetDestination());
+							moved = true;
+					}
 				}
+
+
 			}
 		}
 
@@ -80,6 +80,7 @@ void Player::Look() {
 		}
 	}
 
+	cout << endl;
 
 	for (auto entity : location->GetContains()) {
 		if (entity->GetType() == EntityType::ITEM) {
@@ -250,7 +251,7 @@ void Player::Put(vector<string> args) {
 	entity_name.erase(entity_name.size() - 1, 1);
 	container_name.erase(container_name.size() - 1, 1);
 
-	
+
 
 	for (auto player_entity : GetContains()) {
 		if (player_entity->GetType() == EntityType::ITEM) {

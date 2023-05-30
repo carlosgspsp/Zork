@@ -33,6 +33,8 @@ World::World() { //World constructor
 	actions_map.insert({ "take", Actions::TAKE });
 	actions_map.insert({ "drop", Actions::DROP });
 	actions_map.insert({ "put", Actions::PUT });
+	actions_map.insert({ "close", Actions::CLOSE });
+	actions_map.insert({ "open", Actions::OPEN });
 
 	directions_map.insert({ "north", ExitDirections::NORTH });
 	directions_map.insert({ "n", ExitDirections::NORTH });
@@ -63,55 +65,55 @@ World::World() { //World constructor
 	Room* basement = new Room("Basement", "You are in the basement.");
 
 
-	Exit* west_house_to_north_house = new Exit("", "", ExitDirections::NORTH, west_house, north_house);
-	Exit* west_house_to_south_house = new Exit("", "", ExitDirections::SOUTH, west_house, south_house);
+	Exit* west_house_to_north_house = new Exit("", "To the north is the north side of the house.", ExitDirections::NORTH, west_house, north_house);
+	Exit* west_house_to_south_house = new Exit("", "To the south is the south side of the house.", ExitDirections::SOUTH, west_house, south_house);
 
 	west_house->AddEntity(west_house_to_north_house);
 	west_house->AddEntity(west_house_to_south_house);
 
-	Exit* north_house_to_west_house = new Exit("", "", ExitDirections::WEST, north_house, west_house);
-	Exit* north_house_to_behind_house = new Exit("", "", ExitDirections::EAST, north_house, behind_house);
+	Exit* north_house_to_west_house = new Exit("", "To the west is the west side of the house.", ExitDirections::WEST, north_house, west_house);
+	Exit* north_house_to_behind_house = new Exit("", "To the east is the back of the house.", ExitDirections::EAST, north_house, behind_house);
 
 	north_house->AddEntity(north_house_to_west_house);
 	north_house->AddEntity(north_house_to_behind_house);
 
-	Exit* behind_house_to_north_house = new Exit("", "", ExitDirections::NORTH, behind_house, north_house);
+	Exit* behind_house_to_north_house = new Exit("", "To the north is the north side of the house.", ExitDirections::NORTH, behind_house, north_house);
 	Item* kitchen_key = new Item("stone key", "small stone key with a word written in it 'kitchen'", true, false, false);
-	Exit* behind_house_to_kitchen = new Exit("", "In one corner of the house there is a back door, It seems to be a kitchen behind it.", ExitDirections::WEST, behind_house, kitchen, true, kitchen_key);
-	Exit* behind_house_to_south_house = new Exit("", "", ExitDirections::SOUTH, behind_house, south_house);
+	Exit* behind_house_to_kitchen = new Exit("", "To the west you can find a back door to the house, It seems to be a kitchen inside.", ExitDirections::WEST, behind_house, kitchen, true, kitchen_key);
+	Exit* behind_house_to_south_house = new Exit("", "To the south is the south side of the house.", ExitDirections::SOUTH, behind_house, south_house);
 
 	behind_house->AddEntity(behind_house_to_north_house);
 	behind_house->AddEntity(behind_house_to_kitchen);
 	behind_house->AddEntity(behind_house_to_south_house);
 
-	Exit* south_house_to_west_house = new Exit("", "", ExitDirections::WEST, south_house, west_house);
-	Exit* south_house_to_behind_house = new Exit("", "", ExitDirections::EAST, south_house, behind_house);
+	Exit* south_house_to_west_house = new Exit("", "To the west is the west side of the house.", ExitDirections::WEST, south_house, west_house);
+	Exit* south_house_to_behind_house = new Exit("", "To the east is the back of the house.", ExitDirections::EAST, south_house, behind_house);
 
 	south_house->AddEntity(south_house_to_behind_house);
 	south_house->AddEntity(south_house_to_west_house);
 
 
-	Exit* kitchen_to_behind_house = new Exit("", "", ExitDirections::EAST, kitchen, behind_house);
-	Exit* kitchen_to_living_room = new Exit("", "", ExitDirections::WEST, kitchen, living_room);
+	Exit* kitchen_to_behind_house = new Exit("", "To the east is the back of the house.", ExitDirections::EAST, kitchen, behind_house);
+	Exit* kitchen_to_living_room = new Exit("", "To the west is the living room.", ExitDirections::WEST, kitchen, living_room);
 	Item* attic_key = new Item("iron key", "iron key with a word written in it 'attic'", true, false, false);
-	Exit* kitchen_to_attic = new Exit("", "", ExitDirections::UP, kitchen, attic , true, attic_key);
+	Exit* kitchen_to_attic = new Exit("", "Going up is the attic.", ExitDirections::UP, kitchen, attic , true, attic_key);
 
 	kitchen->AddEntity(kitchen_to_behind_house);
 	kitchen->AddEntity(kitchen_to_living_room);
 	kitchen->AddEntity(kitchen_to_attic);
 
-	Exit* living_room_to_kitchen = new Exit("", "", ExitDirections::EAST, living_room, kitchen);
+	Exit* living_room_to_kitchen = new Exit("", "To the east is the kitchen.", ExitDirections::EAST, living_room, kitchen);
 	Item* basement_key = new Item("wooden key", "wooden key with a word written in it 'basement'", true, false, false);
-	Exit* living_room_to_basement = new Exit("", "", ExitDirections::DOWN, living_room, basement, true , basement_key);
+	Exit* living_room_to_basement = new Exit("", "Going down is the basement.", ExitDirections::DOWN, living_room, basement, true , basement_key);
 
 	living_room->AddEntity(living_room_to_kitchen);
 	living_room->AddEntity(living_room_to_basement);
 
-	Exit* attic_to_kitchen = new Exit("", "", ExitDirections::DOWN, attic, kitchen);
+	Exit* attic_to_kitchen = new Exit("", "Going down is the kitchen", ExitDirections::DOWN, attic, kitchen);
 
 	attic->AddEntity(attic_to_kitchen);
 
-	Exit* basement_to_living_room = new Exit("", "", ExitDirections::UP, basement, living_room);
+	Exit* basement_to_living_room = new Exit("", "Going up is the basement", ExitDirections::UP, basement, living_room);
 
 	basement->AddEntity(basement_to_living_room);
 
@@ -126,14 +128,14 @@ World::World() { //World constructor
 	kitchen->AddEntity(table);
 	table->AddEntity(basement_key);
 
-	Item* steel_chest = new Item("chest", "Steel chest", false, true, true);
+	Item* steel_chest = new Item("steel chest", "Steel chest", false, true, true);
 	steel_chest->AddEntity(attic_key);
 	basement->AddEntity(steel_chest);
 
-	Item* treasure = new Item("treasure", "Big treasure", true, false, false);
-	Item* gold_chest = new Item("chest", "Gold chest", false, true, true);
+	Item* treasure = new Item("treasure", "treasure", true, false, false);
+	Item* gold_chest = new Item("gold chest", "Gold chest", false, true, true);
 
-	Item* knife = new Item("knife", "big knife", true, false, false);
+	Item* knife = new Item("knife", "knife", true, false, false);
 	((Player*)player)->AddEntity(knife);
 
 	gold_chest->AddEntity(treasure);
@@ -241,6 +243,14 @@ void World::ParseCommand(string command) {
 			break;
 		case Actions::PUT:
 			cout << endl << "PUT COMMAND" << endl;
+			((Player*)player)->Put(command_words);
+			break;
+		case Actions::OPEN:
+			cout << endl << "OPEN COMMAND" << endl;
+			((Player*)player)->Put(command_words);
+			break;
+		case Actions::CLOSE:
+			cout << endl << "CLOSE COMMAND" << endl;
 			((Player*)player)->Put(command_words);
 			break;
 		case Actions::QUIT:
