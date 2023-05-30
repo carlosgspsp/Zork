@@ -12,7 +12,7 @@ void Player::Update() {
 
 }
 
-void Player::Go(vector<string> args, const vector<Entity*>& entities, map<string, ExitDirections>& directions_map) {
+void Player::Go(vector<string> args, map<string, ExitDirections>& directions_map) {
 
 	int direction_pos = (args.size() > 2) ? 1 : args.size() - 1;
 	ExitDirections direction;

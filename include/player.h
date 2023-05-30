@@ -10,7 +10,7 @@ class Player : public Creature
 public:
 	Player(string name, string description, Room* location);
 	void Update()override; 
-	void Go(vector<string> args, const vector<Entity*>& entities, map<string, ExitDirections> &directions_map);
+	void Go(vector<string> args, map<string, ExitDirections> &directions_map);
 	void Look();
 	void Inventory();
 	void Take(vector<string> args);

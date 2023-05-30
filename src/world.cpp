@@ -33,8 +33,6 @@ World::World() { //World constructor
 	actions_map.insert({ "take", Actions::TAKE });
 	actions_map.insert({ "drop", Actions::DROP });
 	actions_map.insert({ "put", Actions::PUT });
-	actions_map.insert({ "close", Actions::CLOSE });
-	actions_map.insert({ "open", Actions::OPEN });
 
 	directions_map.insert({ "north", ExitDirections::NORTH });
 	directions_map.insert({ "n", ExitDirections::NORTH });
@@ -120,7 +118,7 @@ World::World() { //World constructor
 	player = new Player("Player", "The Hero of the Dungeon", west_house);
 
 
-	Item* mailbox = new Item("mailbox", "small mailbox", false, true, false);
+	Item* mailbox = new Item("mailbox", "small mailbox", false, true, true);
 	west_house->AddEntity(mailbox);
 	mailbox->AddEntity(kitchen_key);
 
@@ -133,7 +131,7 @@ World::World() { //World constructor
 	basement->AddEntity(steel_chest);
 
 	Item* treasure = new Item("treasure", "treasure", true, false, false);
-	Item* gold_chest = new Item("gold chest", "Gold chest", false, true, true);
+	Item* gold_chest = new Item("golden chest", "Golden chest", false, true, true);
 
 	Item* knife = new Item("knife", "knife", true, false, false);
 	((Player*)player)->AddEntity(knife);
@@ -203,6 +201,9 @@ void World::Play() {
 		}
 		GameFinished();
 	}
+
+	cout << "\n\nPress Enter to close the game.";
+	cin.get();
 }
 
 bool World::GameFinished() {
@@ -231,7 +232,7 @@ void World::ParseCommand(string command) {
 		{
 		case Actions::GO:
 			cout << endl << "GO COMMAND" << endl;
-			((Player*)player)->Go(command_words, entities, directions_map);
+			((Player*)player)->Go(command_words, directions_map);
 			break;
 		case Actions::LOOK:
 			cout << endl << "LOOK COMMAND" << endl;
@@ -251,14 +252,6 @@ void World::ParseCommand(string command) {
 			break;
 		case Actions::PUT:
 			cout << endl << "PUT COMMAND" << endl;
-			((Player*)player)->Put(command_words);
-			break;
-		case Actions::OPEN:
-			cout << endl << "OPEN COMMAND" << endl;
-			((Player*)player)->Put(command_words);
-			break;
-		case Actions::CLOSE:
-			cout << endl << "CLOSE COMMAND" << endl;
 			((Player*)player)->Put(command_words);
 			break;
 		case Actions::QUIT:
