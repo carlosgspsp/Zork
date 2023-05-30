@@ -201,10 +201,18 @@ void World::Play() {
 		if (command != "") {
 			ParseCommand(command);
 		}
+		GameFinished();
 	}
 }
 
 bool World::GameFinished() {
+	for (auto entity : player->GetContains()) {
+		if (entity->GetName() == "treasure") {
+			finish_game = true;
+			cout << endl << "CONGRATULATIONS! YOU WON!" << endl;
+		}
+	}
+	
 	return finish_game;
 }
 void World::ParseCommand(string command) {
