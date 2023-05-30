@@ -3,6 +3,7 @@
 Item::Item(string name, string description, bool takeable, bool container, bool open) : Entity(name, description, EntityType::ITEM) {
 	this->takeable = takeable;
 	this->container = container;
+	this->open = open;
 }
 
 void Item::AddEntity(Entity* entity) {
@@ -21,3 +22,4 @@ bool Item::isContainer() {
 void Item::Update() {
 
 }
+

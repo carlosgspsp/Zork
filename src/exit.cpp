@@ -7,6 +7,17 @@ Exit::Exit(string name,string description,ExitDirections direction, Room* source
 	this->direction = direction;
 	this->source = source;
 	this->destination = destination;
+	this->locked = false;
+	this->key = nullptr;
+}
+
+Exit::Exit(string name, string description, ExitDirections direction, Room* source, Room* destination, bool locked, Item* key) : Entity(name, description, EntityType::EXIT) { //Exit constructor
+
+	this->direction = direction;
+	this->source = source;
+	this->destination = destination;
+	this->locked = locked;
+	this->key = key;
 }
 
 void Exit::Update() {

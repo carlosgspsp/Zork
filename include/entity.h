@@ -34,11 +34,6 @@ public:
 	void AddEntity(Entity* entity);
 	void RemoveEntity(Entity* entity);
 
-	//Set contains
-	//Add contains
-	//Remove contains
-
-
 	void SetType(EntityType type);
 	void SetName(string name);
 	void SetDescription(string description);
