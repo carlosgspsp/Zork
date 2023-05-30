@@ -4,17 +4,17 @@ Zork is a short and simple conversational game based on [Zork Game](http://texta
 
 ## Installation
 
-Download zip file in [release](https://github.com/carlosgspsp/Zork/releases), unzip it and execute the Zork.exe file.
+Download Zork.zip file in [release](https://github.com/carlosgspsp/Zork/releases), unzip it and execute the Zork.exe file.
 
 ## Commands Guide
 
 List of commands
 - The 'LOOK' command prints a description of your surroundings.
 - The 'GO direction' command moves the player to the room in the choosen direction.
-- The 'INVENTORY' command show the player´s inventory.
+- The 'INVENTORY' command show the playerÂ´s inventory.
 - The TAKE item' command take the item from the scenario and puts it in the player inventory.
-- The 'DROP item' command puts and item from the player´s inventory on the scenario.
-- The 'PUT item IN container' command put and item from the player´s inventory or the scenario into another object´s inventory.
+- The 'DROP item' command puts and item from the playerÂ´s inventory on the scenario.
+- The 'PUT item IN container' command put and item from the playerÂ´s inventory or the scenario into another objectÂ´s inventory.
 - The 'QUIT' command quits the game. 
 
 Commands Abbreviations
@@ -47,13 +47,13 @@ In the basement there is a steel chest with an iron key inside it, the player sh
 
 In the attic there is a golden chest with a treasure inside. If the players takes the treasure ("take treasure" command) the player will win and the game will be finished.
 
-## Author
-- [Carlos García Segura](https://github.com/carlosgspsp)
+## Authors
+- [Carlos GarcÃ­a Segura](https://github.com/carlosgspsp)
 ## License
 
 MIT License
 
-Copyright (c) [2023] [Carlos García Segura]
+Copyright (c) [2023] [Carlos GarcÃ­a Segura]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
